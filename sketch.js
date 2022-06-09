@@ -3,33 +3,48 @@ directionSpeedY = 3;
 
 function setup() {
   createCanvas(800, 800);
-  x = random(0, width);
-  y = random(0, height);
+ 
+  circle_1 = new drawCircle();
+  circle_2 = new drawCircle();
 }
 
 function draw() {
-  background(0, 100, 0, 1);
-  colorMode(HSL);
-  let hueX = map(x, 0, width, 0, 360, true);
-  let hueY = map(y, 0, height, 0, 360, true);
-  let from = color(hueX, 100, 50, 1);
-  let to = color(hueY, 100, 50, 1,);
-  let ballColour = lerpColor(from, to, 0.33);
-  fill(ballColour);
-  ellipse(x, y, 50, 50);
+
+  circle_1.draw();
+  circle_2.draw();
+}
   
-  if (x > width-25) {
-    directionSpeedX = -3;
-  } else if (x < 25){
-    directionSpeedX = 3;
+function drawCircle() {
+
+  //position of x and y for ellipse
+  this.x = random(0, width);
+  this.y = random(0, height);
+
+  //colour blending for the fill function of ellipse colour
+  this.hueX = map(this.x, 0, width, 0, 360, true);
+  this.hueY = map(this.y, 0, height, 0, 360, true);
+  this.from = color(this.hueX, 100, 50, 1);
+  this.to = color(this.hueY, 100, 50, 1,);
+  this.ballColour = lerpColor(this.from, this.to, 0.33);
+  
+  this.draw = function () {
+    colorMode(HSL);
+    fill(this.ballColour);
+    ellipse(this.x, this.y, 50, 50);
+  
+    if (this.x > width-25) {
+      directionSpeedX = -3;
+    } else if (this.x < 25){
+      directionSpeedX = 3;
+    }
+  
+    if (this.y > height-25) {
+      directionSpeedY = -3;
+    } else if (this.y < 25) {
+      directionSpeedY = 3;
+    }
+  
+    this.x = this.x + directionSpeedX;
+    this.y = this.y + directionSpeedY;
   }
-  
-  if (y > height-25) {
-    directionSpeedY = -3;
-  } else if (y < 25) {
-    directionSpeedY = 3;
-  }
-  
-  x = x + directionSpeedX;
-  y = y + directionSpeedY;
 }
